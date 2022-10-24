@@ -17,6 +17,7 @@ let secondsRemain = 76;
 // For some reason, starting the secondRemain variable at 75 causes the timer to start at 74
 const penalty = 10;
 let intervalTime = 0;
+const ulEl = document.createElement("ul");
 
 // Questions array
 const questionArr = [{
@@ -44,7 +45,7 @@ const questionArr = [{
     choices: ["JavaScript", "terminal / bash", "for loops", "console.log"],
     answer: "console.log",
 },
-]
+];
 
 startButton.addEventListener("click", function () {
     if (intervalTime === 0) {
@@ -61,13 +62,52 @@ startButton.addEventListener("click", function () {
     }
     render(currentQuestionIndex);
 });
-// Displays questions and answers
+// Displays question
 function render(currentQuestionIndex) {
     questionsCon.innerHTML = "";
+    ulEl.innerHTML = "";
+    for (let i = 0; i < questionArr.length; i++) {
+        let titleQuestion = questionArr[currentQuestionIndex].question;
+        const userChoices = questionArr[currentQuestionIndex].choices;
+        questionsCon.textContent = titleQuestion;
 
+        userChoices.forEach(function (newItem) {
+        let liEl = document.createElement("li");
+        liEl.textContent = newItem;
+        questionsCon.appendChild(ulEl);
+        ulEl.appendChild(liEl);
+        liEl.addEventListener("click", (checkAnswer));
+        });
+    }
+
+// Compare answers to find the correct one
+function checkAnswer (e) {
+    let targetAnswer = e.target;
+    if (targetAnswer.matches("li")) {
+        let newDiv = document.createElement("div");
+        newDiv.setAttribute("id", "newDiv");
+        if (targetAnswer.textContent == questionArr[currentQuestionIndex].answer) {
+            score++;
+            newDiv.textContent = "Correct!";
+        } else {
+            secondsRemain = secondsRemain - penalty;
+            newDiv.textContent = "Incorrect answer. The correct answer is: " + questionArr[currentQuestionIndex].answer;
+        }
+    
+// New question
+    currentQuestionIndex++;
+    if (currentQuestionIndex >= questionArr.length) {
+        endOfRound();
+        newDiv.textContent = "All done!" + " " + "You got " + score + "out of " + questionArr.length + " correct!";
+    } else {
+        render(currentQuestionIndex);
+        questionsCon.appendChild(newDiv);
+    }
+    
 
 }
-
+}
+}
 // Once the round ends, this will go into the last page (creating a new header, paragraph, label, and input)
 function endOfRound () {
     questionsCon.innerHTML = "";
@@ -93,13 +133,46 @@ function endOfRound () {
     createLabel.textContent = "Enter your initials: ";
     questionsCon.appendChild(createLabel);
 
+    const createInput = document.createElement("input");
+    createInput.setAttribute("type", "text");
+    createInput.setAttribute("id", "initials");
+    createInput.textContent = "";
+    questionsCon.appendChild(createInput);
+
     const submit = document.createElement("button");
     submit.setAttribute("type", "submit");
     submit.setAttribute("id", "submit");
     submit.textContent = "Submit";
-    questionsCon.appendChild("submit");
+    questionsCon.appendChild(submit);
 
-}
+    submit.addEventListener("click", function () {
+        let initials = createInput.value;
+
+        if (initials === null) {
+            window.alert("No value entered");
+
+        } else {
+            let finalScore = {
+                initials: initials,
+                score: timeLeft,
+            }
+            console.log(finalScore);
+            const scoreboard = localStorage.getItem("scoreboard");
+            if (scoreboard === null) {
+                scoreboard = [];
+            } else {
+                scoreboard = JSON.parse(scoreboard);
+            }
+            scoreboard.push(finalScore);
+            let newScore = JSON.stringify(scoreboard);
+            localStorage.setItem("scoreboard", newScore);
+            window.location.replace("./highscores.html");
+            }
+        });
+    }
+
+
+//EVERYTHING BELOW THIS LINE IS CODE I TRIED AND FAILED AT CERTAIN POINTS. I WANTED TO KEEP IT TO BETTER UNDERSTAND WHERE I WENT WRONG
 
 
 // Getting the timer to display
@@ -196,4 +269,4 @@ function endOfRound () {
 // }
 
 // startButton.addEventListener("click", startQuiz);
-
+// 
