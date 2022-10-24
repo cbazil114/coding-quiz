@@ -10,11 +10,13 @@ const timeMarker = document.getElementById("timeMarker");
 
 
 
-
+// Variables, including some specific numbers to reference later
 let score = 0;
 let currentQuestionIndex = 0;
-let secondsRemain = 75;
+let secondsRemain = 76;
+// For some reason, starting the secondRemain variable at 75 causes the timer to start at 74
 const penalty = 10;
+let intervalTime = 0;
 
 // Questions array
 const questionArr = [{
@@ -43,6 +45,62 @@ const questionArr = [{
     answer: "console.log",
 },
 ]
+
+startButton.addEventListener("click", function () {
+    if (intervalTime === 0) {
+        intervalTime = setInterval(function () {
+            secondsRemain--;
+            timeMarker.textContent = "Time Left: " + secondsRemain;
+            if (secondsRemain <= 0) {
+                // Why does this not work when = 0?
+                clearInterval(intervalTime);
+                endOfRound();
+                timeMarker.textContent = "Out of time!";
+            }
+        }, 1000);
+    }
+    render(currentQuestionIndex);
+});
+// Displays questions and answers
+function render(currentQuestionIndex) {
+    questionsCon.innerHTML = "";
+
+
+}
+
+// Once the round ends, this will go into the last page (creating a new header, paragraph, label, and input)
+function endOfRound () {
+    questionsCon.innerHTML = "";
+    timeMarker.innerHTML = "";
+    const endH1 = document.createElement("h1");
+    endH1.setAttribute("id", "endH1");
+    endH1.textContent = "All done!";
+    questionsCon.appendChild(endH1);
+
+    const endPara = document.createElement("p");
+    endPara.setAttribute("id", "endPara");
+    questionsCon.appendChild(endPara);
+
+    if (secondsRemain >= 0) {
+        let timeLeft = secondsRemain;
+        let endPara2 = document.createElement("p");
+        clearInterval(intervalTime);
+        endPara.textContent = "Your final score is " + timeLeft;
+        questionsCon.appendChild(endPara2);
+    }
+    const createLabel = document.createElement("label");
+    createLabel.setAttribute("id", "createLabel");
+    createLabel.textContent = "Enter your initials: ";
+    questionsCon.appendChild(createLabel);
+
+    const submit = document.createElement("button");
+    submit.setAttribute("type", "submit");
+    submit.setAttribute("id", "submit");
+    submit.textContent = "Submit";
+    questionsCon.appendChild("submit");
+
+}
+
 
 // Getting the timer to display
 // let counter = 0;
