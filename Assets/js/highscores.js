@@ -14,7 +14,7 @@ scoreboard = JSON.parse(scoreboard);
 if (scoreboard !== null) {
     for (let i = 0; i < scoreboard.length; i++) {
         let liEl = document.createElement("li");
-        liEl.textContent = scoreboard[1].initials + " " + scoreboard[i].score;
+        liEl.textContent = scoreboard[i].initials + " " + scoreboard[i].score;
         highscore.appendChild(liEl);
     }
 }

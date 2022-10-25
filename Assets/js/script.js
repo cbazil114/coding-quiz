@@ -11,7 +11,7 @@ const timeMarker = document.getElementById("timeMarker");
 
 
 // Variables, including some specific numbers to reference later
-let score = 0;
+let currentScore = 0;
 let currentQuestionIndex = 0;
 let secondsRemain = 76;
 // For some reason, starting the secondRemain variable at 75 causes the timer to start at 74
@@ -92,7 +92,7 @@ function render() {
             let newDiv = document.createElement("div");
             newDiv.setAttribute("id", "newDiv");
             if (targetAnswer.textContent == questionArr[currentQuestionIndex].answer) {
-                score++;
+                currentScore++;
                 newDiv.textContent = "Correct!";
             } else {
                 secondsRemain = secondsRemain - penalty;
@@ -102,8 +102,11 @@ function render() {
             // New question
             currentQuestionIndex++;
             if (currentQuestionIndex >= questionArr.length) {
+                clearInterval(intervalTime);
                 endOfRound();
-                newDiv.textContent = "All done!" + " " + "You got " + score + "out of " + questionArr.length + " correct!";
+                newDiv.textContent = "All done!" + " " + "You got " + currentScore + " out of " + questionArr.length + " correct!";
+                console.log(newDiv);
+                questionsCon.appendChild(newDiv);
             } else {
                 render(currentQuestionIndex);
                 questionsCon.appendChild(newDiv);
@@ -126,11 +129,15 @@ function endOfRound() {
     endPara.setAttribute("id", "endPara");
     questionsCon.appendChild(endPara);
 
-    if (secondsRemain >= 0) {
-        let timeLeft = secondsRemain;
+    let timeLeft; 
+    let totalScore;
+
+    if (secondsRemain === 0) {
+        timeLeft = secondsRemain;
+
         let endPara2 = document.createElement("p");
         clearInterval(intervalTime);
-        endPara.textContent = "Your final score is " + timeLeft;
+        endPara.textContent = "You are out of time, and have failed the quiz";
         questionsCon.appendChild(endPara2);
     }
     const createLabel = document.createElement("label");
@@ -153,16 +160,17 @@ function endOfRound() {
     submit.addEventListener("click", function () {
         let initials = createInput.value;
 
-        if (initials === null) {
-            window.alert("No value entered");
+        if (initials.length !== 2) {
+            window.alert("Pleae enter two initials");
+            return;
 
         } else {
             let finalScore = {
                 initials: initials,
-                score: timeLeft,
+                score: currentScore,
             }
             console.log(finalScore);
-            const scoreboard = localStorage.getItem("scoreboard");
+            let scoreboard = localStorage.getItem("scoreboard");
             if (scoreboard === null) {
                 scoreboard = [];
             } else {
