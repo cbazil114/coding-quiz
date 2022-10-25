@@ -54,7 +54,7 @@ The deployed application can be reached at: https://cbazil114.github.io/coding-q
 
 Here are screenshots of both the index.HTML page, and the highscores.HTML page.
 
-![Coding Quiz Screenshot](/Assets/images/cbazil114.github.io_coding-quiz_index.html.png)
+![Coding Quiz Screenshot](/Assets/images/cbazil114.github.io_coding-quiz_.png)
 
 ![Coding Quiz Highscores Screenshot](/Assets/images/cbazil114.github.io_coding-quiz_highscores.html%20(1).png)
 
