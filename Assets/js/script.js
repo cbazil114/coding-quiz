@@ -18,6 +18,7 @@ let secondsRemain = 76;
 const penalty = 10;
 let intervalTime = 0;
 const ulEl = document.createElement("ul");
+let counter = 0;
 
 // Questions array
 const questionArr = [{
@@ -57,7 +58,7 @@ startButton.addEventListener("click", function () {
                 clearInterval(intervalTime);
                 endOfRound();
                 timeMarker.textContent = "Out of time!";
-            } else if (currentQuestionIndex >= questionArr.length +1){
+            } else if (currentQuestionIndex >= questionArr.length + 1) {
                 clearInterval(intervalTime);
                 endOfRound();
             }
@@ -70,50 +71,50 @@ function render() {
     var currentQuestion = questionArr[currentQuestionIndex];
     questionsCon.innerHTML = "";
     ulEl.innerHTML = "";
-    for (let i = 0; i < currentQuestion.choices.length; i++) {
+
         let titleQuestion = questionArr[currentQuestionIndex].question;
         const userChoices = questionArr[currentQuestionIndex].choices;
         questionsCon.textContent = titleQuestion;
 
         userChoices.forEach(function (newItem) {
-        let liEl = document.createElement("li");
-        liEl.textContent = newItem;
-        questionsCon.appendChild(ulEl);
-        ulEl.appendChild(liEl);
-        liEl.addEventListener("click", (checkAnswer));
+            let liEl = document.createElement("li");
+            liEl.textContent = newItem;
+            questionsCon.appendChild(ulEl);
+            ulEl.appendChild(liEl);
+            liEl.addEventListener("click", (checkAnswer));
         });
-    }
 
-// Compare answers to find the correct one
-function checkAnswer (e) {
-    let targetAnswer = e.target;
-    if (targetAnswer.matches("li")) {
-        let newDiv = document.createElement("div");
-        newDiv.setAttribute("id", "newDiv");
-        if (targetAnswer.textContent == questionArr[currentQuestionIndex].answer) {
-            score++;
-            newDiv.textContent = "Correct!";
-        } else {
-            secondsRemain = secondsRemain - penalty;
-            newDiv.textContent = "Incorrect answer. The correct answer is: " + questionArr[currentQuestionIndex].answer;
+
+    // Compare answers to find the correct one
+    function checkAnswer(e) {
+        let targetAnswer = e.target;
+        if (targetAnswer.matches("li")) {
+            let newDiv = document.createElement("div");
+            newDiv.setAttribute("id", "newDiv");
+            if (targetAnswer.textContent == questionArr[currentQuestionIndex].answer) {
+                score++;
+                newDiv.textContent = "Correct!";
+            } else {
+                secondsRemain = secondsRemain - penalty;
+                newDiv.textContent = "Incorrect answer. The correct answer is: " + questionArr[currentQuestionIndex].answer;
+            }
+
+            // New question
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= questionArr.length) {
+                endOfRound();
+                newDiv.textContent = "All done!" + " " + "You got " + score + "out of " + questionArr.length + " correct!";
+            } else {
+                render(currentQuestionIndex);
+                questionsCon.appendChild(newDiv);
+            }
+
+
         }
-    
-// New question
-    currentQuestionIndex++;
-    if (currentQuestionIndex >= questionArr.length) {
-        endOfRound();
-        newDiv.textContent = "All done!" + " " + "You got " + score + "out of " + questionArr.length + " correct!";
-    } else {
-        render(currentQuestionIndex);
-        questionsCon.appendChild(newDiv);
     }
-    
-
-}
-}
 }
 // Once the round ends, this will go into the last page (creating a new header, paragraph, label, and input)
-function endOfRound () {
+function endOfRound() {
     questionsCon.innerHTML = "";
     timeMarker.innerHTML = "";
     const endH1 = document.createElement("h1");
@@ -171,106 +172,8 @@ function endOfRound () {
             let newScore = JSON.stringify(scoreboard);
             localStorage.setItem("scoreboard", newScore);
             window.location.replace("./highscores.html");
-            }
-        });
-    }
+        }
+    });
+}
 
 
-//EVERYTHING BELOW THIS LINE IS CODE I TRIED AND FAILED AT CERTAIN POINTS. I WANTED TO KEEP IT TO BETTER UNDERSTAND WHERE I WENT WRONG
-
-
-// Getting the timer to display
-// let counter = 0;
-// let timerEl = document.createElement("header", "id", "timer", "Time Remaining: ");
-// timerEl.setAttribute("class", "top-position", "right: 5px");
-// header.appendChild(timerEl);
-// let counterSpan = document.createElement("span", "id", "countdown", "counter" );
-// timerEl.appendChild(counterSpan);
-
-// How the timer should function on the page
-// function startTimer() {
-//     timer = setInterval(function() {
-//         counter--;
-//         counterSpan.textContent = counter;
-//         if (counter === 0) {
-//           clearInterval(timerCount);
-//           lose();
-//         }
-//     }, 1000);
-// }
-
-// function countdownClock () {
-//     let timerInterval = setInterval(function() {
-//         gameClock.textContent = gameTimer;
-//         gameTimer--;
-//     })
-// }
-
-// // function lose( {
-// //     counterSpan.textContent = 0;
-// //     h1.textContent = "The game is over"
-    
-// // })
-
-
-// // Some variables regarding the questions, starting score, and starting time
-// let currentQuestionIndex = 0;
-// const totalQuestions = questionArr.length
-// let finalQuestionIndex = questionArr.length - 1;
-// let questionChoices = questionArr[currentQuestionIndex].possibleAnswers;
-// let score = 0;
-
-// // counter = 75;
-// // counterSpan.textContent = counter;
-
-
-// function renderQuiz () {
-//     const question = document.createElement("h1");
-//     question.setAttribute("class", "question");
-//     question.setAttribute("id", "question");
-//     question.textContent = questionArr[currentQuestionIndex].question;
-//     container.appendChild(question);
-
-//     const answer = document.createElement("button");
-//     answer.setAttribute("class", "possibleAnswers")
-//     answer.setAttribute("id", "possibleAnswers")
-//     answer.textContent = questionArr[currentQuestionIndex].possibleAnswers[0];
-//     question.appendChild(possibleAnswers);
-// }
-
-// // Display the four choices for each question
-// // function choices () {
-// //     for (var i = 0; i < possibleAnswers.length; i++) {
-// //         let choicesBtn = document.createElement("button");
-// //         choicesBtn.setAttribute("class", aChoice);
-// //         choicesBtn.setAttribute("id", i);
-// //         choicesBtn.textContent = questionArr(currentQuestionIndex).possibleAnswers[i];
-// //         container.appendChild(choicesBtn);
-
-// //     }
-// // }
-
-// function choices () {
-    
-// }
-
-// // Starts the quiz; removing that container elements and starting renderQuiz to bring questions
-// function startQuiz () {
-//     console.log("Beginning the quiz!");
-//     event.preventDefault();
-//     container.innerHTML = "";
-//     renderQuiz();
-
-
-// }
-
-// // function userInitials () {
-
-// // }
-
-// function recordScores() {
-//     let scores = JSON.parse(window.localStorage.getitem("scores")) 
-// }
-
-// startButton.addEventListener("click", startQuiz);
-// 

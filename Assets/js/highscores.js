@@ -1,5 +1,5 @@
 const highscore = document.getElementById("highscore");
-const return = document.getElementById("return");
+const returns = document.getElementById("returns");
 const clear = document.getElementById("clear");
 
 clear.addEventListener("click", function () {
@@ -19,6 +19,6 @@ if (scoreboard !== null) {
     }
 }
 
-return.addEventListener("click", function () {
+returns.addEventListener("click", function () {
     window.location.replace("./index.html")
 })

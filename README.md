@@ -2,6 +2,12 @@
 
 ## Description
 
+For this assignment, you will be creating a multiple choice quiz where you can enter your high scores with your initials to the local storage so you can access them later. You also have the choice to clear them if you wish. Whether or not you choose to, you can return and take the quiz again!
+
+The point of the assignment is to combine HTML, CSS, and our newly acquired knowledge in JavaScript to create a dynamic yet simple quiz application. 
+
+No installation required other than a source code editer
+
 ## User Story
 
 * **AS A** coding boot camp student
