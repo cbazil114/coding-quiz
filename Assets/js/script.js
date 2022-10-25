@@ -1,10 +1,7 @@
 // Element variables
 const container = document.getElementById("container");
 const questionsCon = document.getElementById("questionsCon");
-// const header = document.getElementById("header");
 const startButton = document.querySelector("#start-button");
-// const choicesList = document.getElementById("choices-list");
-// const scoresList = document.getElementById("scores-list");
 const timeMarker = document.getElementById("timeMarker");
 
 
@@ -68,7 +65,7 @@ startButton.addEventListener("click", function () {
 });
 // Displays question
 function render() {
-    var currentQuestion = questionArr[currentQuestionIndex];
+    let currentQuestion = questionArr[currentQuestionIndex];
     questionsCon.innerHTML = "";
     ulEl.innerHTML = "";
 
@@ -87,9 +84,9 @@ function render() {
 
     // Compare answers to find the correct one to display to user
     function checkAnswer(e) {
-        let targetAnswer = e.target;
+        const targetAnswer = e.target;
         if (targetAnswer.matches("li")) {
-            let newDiv = document.createElement("div");
+            const newDiv = document.createElement("div");
             newDiv.setAttribute("id", "newDiv");
             if (targetAnswer.textContent == questionArr[currentQuestionIndex].answer) {
                 currentScore++;
@@ -129,8 +126,7 @@ function endOfRound() {
     endPara.setAttribute("id", "endPara");
     questionsCon.appendChild(endPara);
 
-    let timeLeft; 
-    let totalScore;
+    let timeLeft = 0; 
 
     if (secondsRemain === 0) {
         timeLeft = secondsRemain;
@@ -163,7 +159,7 @@ function endOfRound() {
         let initials = createInput.value;
 
         if (initials.length !== 2) {
-            window.alert("Pleae enter two initials");
+            window.alert("Please enter two initials");
             return;
 
         } else {
@@ -179,8 +175,7 @@ function endOfRound() {
                 scoreboard = JSON.parse(scoreboard);
             }
             scoreboard.push(finalScore);
-            let newScore = JSON.stringify(scoreboard);
-            localStorage.setItem("scoreboard", newScore);
+            localStorage.setItem("scoreboard", JSON.stringify(scoreboard));
             window.location.replace("./highscores.html");
         }
     });
