@@ -57,16 +57,20 @@ startButton.addEventListener("click", function () {
                 clearInterval(intervalTime);
                 endOfRound();
                 timeMarker.textContent = "Out of time!";
+            } else if (currentQuestionIndex >= questionArr.length +1){
+                clearInterval(intervalTime);
+                endOfRound();
             }
         }, 1000);
     }
     render(currentQuestionIndex);
 });
 // Displays question
-function render(currentQuestionIndex) {
+function render() {
+    var currentQuestion = questionArr[currentQuestionIndex];
     questionsCon.innerHTML = "";
     ulEl.innerHTML = "";
-    for (let i = 0; i < questionArr.length; i++) {
+    for (let i = 0; i < currentQuestion.choices.length; i++) {
         let titleQuestion = questionArr[currentQuestionIndex].question;
         const userChoices = questionArr[currentQuestionIndex].choices;
         questionsCon.textContent = titleQuestion;
