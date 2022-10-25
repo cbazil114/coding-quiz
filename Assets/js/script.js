@@ -47,7 +47,7 @@ const questionArr = [{
     answer: "console.log",
 },
 ];
-
+// Startbutton activates the timer, and calls the render function for the question
 startButton.addEventListener("click", function () {
     if (intervalTime === 0) {
         intervalTime = setInterval(function () {
@@ -85,7 +85,7 @@ function render() {
         });
 
 
-    // Compare answers to find the correct one
+    // Compare answers to find the correct one to display to user
     function checkAnswer(e) {
         let targetAnswer = e.target;
         if (targetAnswer.matches("li")) {
@@ -99,7 +99,7 @@ function render() {
                 newDiv.textContent = "Incorrect answer. The correct answer is: " + questionArr[currentQuestionIndex].answer;
             }
 
-            // New question
+            // Increase in currentQuestionIndex until all questions have been exhausted
             currentQuestionIndex++;
             if (currentQuestionIndex >= questionArr.length) {
                 clearInterval(intervalTime);
@@ -116,7 +116,7 @@ function render() {
         }
     }
 }
-// Once the round ends, this will go into the last page (creating a new header, paragraph, label, and input)
+// Once the round ends, this will go into the last page which will display slightly differently depending on if time ran out or the quiz was completed
 function endOfRound() {
     questionsCon.innerHTML = "";
     timeMarker.innerHTML = "";
@@ -140,6 +140,7 @@ function endOfRound() {
         endPara.textContent = "You are out of time, and have failed the quiz";
         questionsCon.appendChild(endPara2);
     }
+    // Create elements for users to interact with - initials input, submit button, etc. 
     const createLabel = document.createElement("label");
     createLabel.setAttribute("id", "createLabel");
     createLabel.textContent = "Enter your initials: ";
@@ -157,6 +158,7 @@ function endOfRound() {
     submit.textContent = "Submit";
     questionsCon.appendChild(submit);
 
+    // When you submit your initials, the EventListener will do one of two things - ask for two initials or store the score in the localStorage, and bring you to the highscores page
     submit.addEventListener("click", function () {
         let initials = createInput.value;
 
