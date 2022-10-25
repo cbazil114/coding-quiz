@@ -11,12 +11,20 @@ button {
     background-color: darkblue;
     color: white;
     border-radius: 3px;
+    padding: 5px;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: blue;
 }
 
 #container {
     text-align: center;
     margin: 15% auto;
     width: 25%;
+    border: darkblue solid 10px;
+    box-shadow: 0 0 10px 5px;
 
 }
 
@@ -27,4 +35,16 @@ h1 {
 .timeMarker {
     top: 0px;
     left: 5px;
+}
+
+li {
+    border: solid;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 2px;
+}
+
+li:hover {
+    background-color: lightgray;
 }

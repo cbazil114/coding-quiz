@@ -48,7 +48,11 @@ Following the acceptance criteria:
 
 ## URL
 
+The deployed application can be reached at: https://cbazil114.github.io/coding-quiz/index.html
+
 ## Screenshot
+
+Here are screenshots of both the index.HTML page, and the highscores.HTML page.
 
 ## Credits
 
